@@ -2,8 +2,8 @@ rabbitmq:
   image: rabbitmq:3-management
   restart: always
   ports:
-  - 5672:5672 # port for the daemon API, can be exposed to public.
-  - 15672:15672 # port for the Management interface
+  - 5672:5672 # port for the daemon API
+  - 15672:15672 # port for the RabbitMQ management interface
 consumer:
   build: consumer
   links:

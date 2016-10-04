@@ -3,7 +3,7 @@ from argparse import RawTextHelpFormatter
 from time import sleep
 
 if __name__ == '__main__':
-    examples = sys.argv[0] + " -p 5672 -s rabbitmq -m 'Hello from Danelle' "
+    examples = sys.argv[0] + " -p 5672 -s rabbitmq -m 'Hello' "
     parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter,
                                  description='Run producer.py',
                                  epilog=examples)

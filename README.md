@@ -1,5 +1,6 @@
 # Dockerized RabbitMQ messaging system producer/consumer example
 
+Demonstrates example RabbitMQ simple producer/consumer running in Docker container
 
 ## Installation
 
@@ -18,5 +19,5 @@ If your environment variable is set incorrectly, you'll get something like
 
 ## Start the management interface to see the message traffic
     
-    http://127.0.0.1:15672/#/
+    http://${RABBIT_HOST_IP}:15672 or if running locally http://127.0.0.1:15672/
     
