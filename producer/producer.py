@@ -10,7 +10,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--port', action='store', dest='port', help='The port to listen on.')
     parser.add_argument('-s', '--server', action='store', dest='server', help='The RabbitMQ server.')
     parser.add_argument('-m', '--message', action='store', dest='message', help='The message to send', required=False, default='Hello')
-    parser.add_argument('-r', '--repeat', action='store', dest='repeat', help='Number of times to repeat the message', required=False, default='20')
+    parser.add_argument('-r', '--repeat', action='store', dest='repeat', help='Number of times to repeat the message', required=False, default='30')
 
     args = parser.parse_args()
     if args.port == None:
@@ -44,6 +44,6 @@ if __name__ == '__main__':
         else:
             LOG.warning('Message NOT delivered')
 
-        sleep(5)
+        sleep(2)
 
     connection.close()
