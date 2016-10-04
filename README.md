@@ -2,6 +2,12 @@
 
 Demonstrates example RabbitMQ simple producer/consumer running in Docker container
 
+## Prerequisites
+
+- Install [Docker](https://docs.docker.com/installation/)
+- Install [Compose](https://docs.docker.com/compose/install/)
+
+
 ## Installation
 
 Set the environment variable RABBIT_HOST_IP. This should be the host IP you get using e.g. ifconfig.
