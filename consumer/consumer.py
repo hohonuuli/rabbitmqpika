@@ -1,6 +1,5 @@
 import pika, logging, sys, argparse, time
 from argparse import RawTextHelpFormatter
-
 from time import sleep
 
 def on_message(channel, method_frame, header_frame, body):
@@ -27,6 +26,7 @@ if __name__ == '__main__':
         print "Missing required argument: -s/--server"
         sys.exit(1)
 
+    # sleep a few seconds to allow RabbitMQ server to come up
     sleep(5)
     logging.basicConfig(level=logging.INFO)
     LOG = logging.getLogger(__name__)

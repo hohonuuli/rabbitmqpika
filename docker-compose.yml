@@ -4,10 +4,14 @@ rabbitmq:
   ports:
   - 5672:5672 # port for the daemon API, can be exposed to public.
   - 15672:15672 # port for the Management interface
-  env_file:
-    - .secret
 consumer:
   build: consumer
   links:
   - rabbitmq
   command: python consumer.py -p 5672 -s ${RABBIT_HOST_IP}
+producer:
+  build: producer
+  links:
+  - rabbitmq
+  # run the producer sending the message "Hello" 20 times
+  command: python producer.py -p 5672 -s ${RABBIT_HOST_IP} -m "Hello" -r 20

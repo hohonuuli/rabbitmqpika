@@ -1,5 +1,6 @@
 import pika, logging, sys, argparse
 from argparse import RawTextHelpFormatter
+from time import sleep
 
 if __name__ == '__main__':
     examples = sys.argv[0] + " -p 5672 -s rabbitmq -m 'Hello from Danelle' "
@@ -8,7 +9,8 @@ if __name__ == '__main__':
                                  epilog=examples)
     parser.add_argument('-p', '--port', action='store', dest='port', help='The port to listen on.')
     parser.add_argument('-s', '--server', action='store', dest='server', help='The RabbitMQ server.')
-    parser.add_argument('-m', '--message', action='store', dest='message', help='The message to send')
+    parser.add_argument('-m', '--message', action='store', dest='message', help='The message to send', required=False, default='Hello')
+    parser.add_argument('-r', '--repeat', action='store', dest='repeat', help='Number of times to repeat the message', required=False, default='20')
 
     args = parser.parse_args()
     if args.port == None:
@@ -17,11 +19,9 @@ if __name__ == '__main__':
     if args.server == None:
         print "Missing required argument: -s/--server"
         sys.exit(1)
-    if args.message == None:
-        print "Missing argument: -m/--message. Defaulting to Hello World"
-        message = "Hello World"
-    else:
-        message = args.message
+
+    # sleep a few seconds to allow RabbitMQ server to come up
+    sleep(5)
 
     logging.basicConfig(level=logging.INFO)
     LOG = logging.getLogger(__name__)
@@ -38,9 +38,12 @@ if __name__ == '__main__':
     # Turn on delivery confirmations
     channel.confirm_delivery()
 
-    if channel.basic_publish('', q_name, message):
-        LOG.info('Message has been delivered')
-    else:
-        LOG.warning('Message NOT delivered')
+    for i in range(0, int(args.repeat)):
+        if channel.basic_publish('', q_name, args.message):
+            LOG.info('Message has been delivered')
+        else:
+            LOG.warning('Message NOT delivered')
+
+        sleep(5)
 
     connection.close()
