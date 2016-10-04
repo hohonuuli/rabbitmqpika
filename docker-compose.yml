@@ -13,5 +13,5 @@ producer:
   build: producer
   links:
   - rabbitmq
-  # run the producer sending the message "Hello" 20 times
-  command: python producer.py -p 5672 -s ${RABBIT_HOST_IP} -m "Hello" -r 20
+  # run the producer sending the message "Hello" 30 times
+  command: python producer.py -p 5672 -s ${RABBIT_HOST_IP} -m "Hello" -r 30
