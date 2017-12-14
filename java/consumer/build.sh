@@ -2,4 +2,4 @@
 
 javac -cp ./lib/\* Consumer.java
 
-java -cp .:./lib/\* Consumer "$@"
+#java -cp .:./lib/\* Consumer "$@"

@@ -2,11 +2,12 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Consumer {
 
@@ -16,13 +17,14 @@ public class Consumer {
     
 
     if (args.length != 2) {
+        System.out.println(args);
         String msg = "Usage:\n" + 
                      "\t" + Consumer.class.getName() + " <port> <server>\n" +
                      "\n" +
                      "\tport = the port to listen to\n" +
                      "\tserver = The RabbitMQ server\n";
 
-        System.out.print(msgs);
+        System.out.print(msg);
         System.exit(1);
     }
 
@@ -40,12 +42,14 @@ public class Consumer {
     factory.setPassword("guest");
     Connection connection = factory.newConnection();
     Channel channel = connection.createChannel();
+
+    Logger log = LoggerFactory.getLogger(Consumer.class);
     
     // --- Declare a queue to sent to 
     channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-    System.out.println("  [*] Waiting for messages. To exit press CTRL+C");
+    log.info("[*] Waiting for messages. To exit press CTRL+C");
     
-    Consumer consumer = new DefaultConsumer(channel) {
+    com.rabbitmq.client.Consumer consumer = new DefaultConsumer(channel) {
       
       @Override
       public void handleDelivery(String consumerTag, 
@@ -54,7 +58,7 @@ public class Consumer {
               byte[] body) throws IOException {
                 
         String msg = new String(body, "UTF-8");
-        System.out.println("  [x] Received '" + msg + "'");
+        log.info("Received message: '" + msg + "'");
       }
     };
     

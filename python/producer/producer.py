@@ -40,9 +40,9 @@ if __name__ == '__main__':
 
     for i in range(0, int(args.repeat)):
         if channel.basic_publish('', q_name, args.message):
-            LOG.info('Message has been delivered')
+            LOG.info(" Message sent: '%s'", args.message)
         else:
-            LOG.warning('Message NOT delivered')
+            LOG.warning(' Message NOT delivered')
 
         sleep(2)
 
